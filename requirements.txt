@@ -1,0 +1,5 @@
+psutil
+pycaw
+comtypes
+keyboard
+pygetwindow
