@@ -9,7 +9,7 @@ import os
 current_volume_text = "Current volume"
 set_volume_min_text = "Set min volume:"
 set_volume_max_text = "Set max volume:"
-
+hotkey_value = "ctrl+f2"
 class VolumeApp:
     def __init__(self, root):
         self.root = root
@@ -19,6 +19,9 @@ class VolumeApp:
         self.is_volume_toggled = False
 
         self.process_file = "process.txt"
+
+        self.hotkey = ttk.Label(root, text=f"Current hotkey: {hotkey_value}")
+        self.hotkey.pack()
 
         self.process_label = ttk.Label(root, text="Choose process:")
         self.process_label.pack()
@@ -48,7 +51,7 @@ class VolumeApp:
         self.volume_value_2 = ttk.Label(root, text="100%")
         self.volume_value_2.pack()
 
-        keyboard.add_hotkey('ctrl+f2', self.toggle_volume)
+        keyboard.add_hotkey(hotkey_value, self.toggle_volume)
         self.load_process_from_file()
 
     def get_processes(self):
