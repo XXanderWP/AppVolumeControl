@@ -12,7 +12,7 @@
   - **Slider for Setting the Second Volume Level**: Set the maximum volume level that will be applied to the selected application when toggling.
 - **Current Volume Display**: The app displays the current volume level for the selected application. This information is updated in real-time as the volume changes.
 - **Hotkeys**:
-  - **Ctrl + F2**: Toggle between the two preset volume levels. The first press sets the first volume level, and a subsequent press sets the second volume level.
+  - **Ctrl + F2**: Toggle between the two preset volume levels. The first press sets the first volume level, and a subsequent press sets the second volume level. This is default hotkey, you can change it. Changed hotkey saved in `hotkey.txt` file
 - **Automatic Application Saving**: The selected application is automatically saved to a file `process.txt` next to the executable file. On the next launch, the application automatically loads the last selected process if it is active.
 
 ## Running Instructions

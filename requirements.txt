@@ -3,3 +3,4 @@ pycaw
 comtypes
 keyboard
 pygetwindow
+pywin32
