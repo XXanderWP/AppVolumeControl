@@ -142,9 +142,11 @@ class VolumeApp:
             if not proc.info['name'] in process_double:
                 title = get_window_title_by_pid(proc.info['pid'])
                 if len(title) > 0:
-                    process_double.append(proc.info['name'])
-                    restitle = title[0]
-                    processes.append(f"{proc.info['name']} || {restitle}")
+                    volume = self.get_current_volume(proc.info['name'])
+                    if volume is not None:
+                        process_double.append(proc.info['name'])
+                        restitle = title[0]
+                        processes.append(f"{proc.info['name']} || {restitle}")
         
         # Сортировка по имени процесса и заголовку окна
         processes = sorted(processes, key=lambda x: (x.split(" || ")[0].lower(), x.split(" || ")[1].lower()))
