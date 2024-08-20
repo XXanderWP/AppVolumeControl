@@ -78,8 +78,13 @@ class VolumeApp:
         # self.hotkey_current_label = ttk.Label(root, text=f"Current hotkey: {self.hotkey_value}")
         # self.hotkey_current_label.pack(pady=10)
 
-        self.process_label = ttk.Label(root, text="Choose process:")
-        self.process_label.pack(pady=5)
+        process = ttk.Frame(root)
+        process.pack(pady=5)
+
+        self.process_label = ttk.Label(process, text="Choose process")
+        self.process_label.pack(side="left", pady=5)
+        self.update_button = ttk.Button(process, text="Update", command=self.update_process_list)
+        self.update_button.pack(side="right", padx=5)
 
         self.process_combo = ttk.Combobox(root, values=self.get_processes(), style="TCombobox")
         self.process_combo.pack(pady=5)
@@ -112,6 +117,11 @@ class VolumeApp:
         self.contacts_button = ttk.Button(root, text="Contacts", command=lambda: self.open_contacts_window())
         self.contacts_button.pack(pady=10)
 
+    def update_process_list(self):
+        # Обновляем список процессов
+        processes = self.get_processes()
+        self.process_combo['values'] = processes
+
     def set_dark_theme(self, target):
         style = ttk.Style(target)
         target.configure(bg="#2e2e2e")
@@ -119,19 +129,27 @@ class VolumeApp:
         style.theme_use('clam')
 
         style.configure("TLabel", background="#2e2e2e", foreground="white")
+        style.configure("TFrame", background="#2e2e2e", foreground="white")
         style.configure("TCombobox", background="#2e2e2e", foreground="white", fieldbackground="#1e1e1e")
         style.configure("TScale", background="#2e2e2e", troughcolor="#4a4a4a", sliderrelief="flat", sliderthickness=20)
         style.configure("TButton", background="#2e2e2e", foreground="white", relief="flat")
         style.map("TButton", background=[("active", "#4a4a4a")], relief=[("pressed", "sunken")])
 
     def get_processes(self):
+        process_double: list[str] = []
         processes: list[str] = []
         for proc in psutil.process_iter(['pid', 'name']):
-            title = get_window_title_by_pid(proc.info['pid'])
-            if len(title) > 0:
-                restitle = title[0]
-                processes.append(f"{proc.info['name']} || {restitle}")
+            if not proc.info['name'] in process_double:
+                title = get_window_title_by_pid(proc.info['pid'])
+                if len(title) > 0:
+                    process_double.append(proc.info['name'])
+                    restitle = title[0]
+                    processes.append(f"{proc.info['name']} || {restitle}")
+        
+        # Сортировка по имени процесса и заголовку окна
+        processes = sorted(processes, key=lambda x: (x.split(" || ")[0].lower(), x.split(" || ")[1].lower()))
         return processes
+
 
     def save_process_to_file(self, process_name):
         with open(self.process_file, 'w') as f:
