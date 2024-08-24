@@ -1,3 +1,5 @@
+# <span style="color:red">This is old project. You can open new version of [Apps Volume Control](https://github.com/XXanderWP/AppsVolumeControl)</span>
+
 # Volume Control App
 
 ## Description
